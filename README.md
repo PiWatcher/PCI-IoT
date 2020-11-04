@@ -3,8 +3,8 @@
 
 ## Downloading the OS Image to Micro SD
 - Here is a link to the website where you can download the latest image (Note: The latet image may have differences in how to set the Pi up)
-- Out version of the image -> Version:  August 2020
 - https://www.raspberrypi.org/downloads/raspberry-pi-os/ (We reccomend downloading the image without the recommended software)
+- Our version of the image -> Version:  August 2020
 
 ## Installing the OS Image to Micro SD
 - Once you have the image you can then download software to to write the image to an sd card
