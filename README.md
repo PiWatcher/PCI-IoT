@@ -2,7 +2,7 @@
 
 
 ## Downloading the OS Image to Micro SD
-- To use our version of the image you can download it from our folder titled Raspberry Pi OS
+- To use our version of the image you can download it from our folder titled Raspberry-Pi-OS and unzip the Raspberry-Pi-OS.zip to get the image
 - Here is a link to the website where you can download the latest image (Note: The latet image may have differences in how to set the Pi up)
 - https://www.raspberrypi.org/downloads/raspberry-pi-os/ (We reccomend downloading the image without the recommended software)
 
