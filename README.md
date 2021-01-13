@@ -24,4 +24,4 @@
 
 
 ## Installing OpenCV
-- Run the command ```shell sudo pip3 install opencv-contrib-python``` in the terminal 
+- Run the command ```sudo pip3 install opencv-contrib-python``` in the terminal 
