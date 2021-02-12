@@ -1,11 +1,24 @@
-import schedule
+from apscheduler.schedulers.blocking import BlockingScheduler
 import os
+import time
+
+scheduler = BlockingScheduler()
 
 def job():
-    os.system("python test.py")
+    cmd = "cd .. && cd yolov4-custom-functions && python detect.py"
+    os.system(cmd)
 
-schedule.every(1).minutes.do(job)
 
+def startScheduler(time_frame):
 
-while True:
-    schedule.run_pending()
+    scheduler.add_job(job, 'interval', seconds=time_frame)
+
+    scheduler.start()
+
+def stopScheduler():
+    scheduler.stop()
+
+def main():
+    startScheduler(10)
+
+main()
