@@ -19,12 +19,10 @@ flags.DEFINE_boolean('tiny', False, 'yolo or yolo-tiny')
 flags.DEFINE_string('model', 'yolov4', 'yolov3 or yolov4')
 flags.DEFINE_list('images', './data/images/kite.jpg', 'path to input image')
 flags.DEFINE_string('output', './detections/', 'path to output folder')
-flags.DEFINE_boolean('dont_show', False, 'dont show image output')
 flags.DEFINE_boolean('info', False, 'print info on detections')
 
 def main(_argv):
     config = ConfigProto()
-    config.gpu_options.allow_growth = True
     session = InteractiveSession(config=config)
     STRIDES, ANCHORS, NUM_CLASS, XYSCALE = utils.load_config(FLAGS)
     input_size = FLAGS.size
@@ -49,7 +47,6 @@ def main(_argv):
             images_data.append(image_data)
         
         images_data = np.asarray(images_data).astype(np.float32)
-
         interpreter.allocate_tensors()
         input_details = interpreter.get_input_details()
         output_details = interpreter.get_output_details()
@@ -79,20 +76,15 @@ def main(_argv):
         # read in all class names from config
         class_names = utils.read_class_names(cfg.YOLO.CLASSES)
 
-        # custom allowed classes (uncomment line below to allow detections for only people)
-        allowed_classes = ['person']
-
-        # count objects found
-        counted_classes = count_objects(pred_bbox, by_class = True, allowed_classes=allowed_classes)
+         # count objects found
+        counted_classes = count_objects(pred_bbox, by_class = True, allowed_classes=['person'])
         
-        # loop through dict and print
         for key, value in counted_classes.items():
-            print("Number of {}s: {}".format(key, value))
-        image = utils.draw_bbox(original_image, pred_bbox, FLAGS.info, counted_classes, allowed_classes=allowed_classes)
-        
+            print("Number of people {}".format(value))
+
+        image = utils.draw_bbox(original_image, pred_bbox, FLAGS.info, counted_classes, allowed_classes=['person'])
         image = Image.fromarray(image.astype(np.uint8))
-        if not FLAGS.dont_show:
-            image.show()
+        image.show()
         image = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
         cv2.imwrite(FLAGS.output + 'detection' + str(count) + '.png', image)
 
