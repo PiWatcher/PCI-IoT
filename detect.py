@@ -13,6 +13,7 @@ import cv2
 import numpy as np
 from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
+import time
 
 flags.DEFINE_integer('size', 416, 'resize images to')
 flags.DEFINE_boolean('tiny', False, 'yolo or yolo-tiny')
@@ -20,17 +21,18 @@ flags.DEFINE_string('model', 'yolov4', 'yolov3 or yolov4')
 flags.DEFINE_list('images', './data/images/kite.jpg', 'path to input image')
 flags.DEFINE_string('output', './detections/', 'path to output folder')
 flags.DEFINE_boolean('info', False, 'print info on detections')
+flags.DEFINE_string('weights', './checkpoints/yolov4-416',
+                    'path to weights file')
 
 def main(_argv):
+    start_before = time.perf_counter()
     config = ConfigProto()
     session = InteractiveSession(config=config)
     STRIDES, ANCHORS, NUM_CLASS, XYSCALE = utils.load_config(FLAGS)
     input_size = FLAGS.size
     images = FLAGS.images
-
-    # load model
-    interpreter = tf.lite.Interpreter(model_path='./models/model.tflite')
-    
+    saved_model_loaded = tf.saved_model.load(FLAGS.weights, tags=[tag_constants.SERVING])
+    start = time.perf_counter()
     # loop through images in list and run Yolov4 model on each
     for count, image_path in enumerate(images, 1):
         original_image = cv2.imread(image_path)
@@ -47,14 +49,13 @@ def main(_argv):
             images_data.append(image_data)
         
         images_data = np.asarray(images_data).astype(np.float32)
-        interpreter.allocate_tensors()
-        input_details = interpreter.get_input_details()
-        output_details = interpreter.get_output_details()
-        interpreter.set_tensor(input_details[0]['index'], images_data)
-        interpreter.invoke()
-        pred = [interpreter.get_tensor(output_details[i]['index']) for i in range(len(output_details))]
-        boxes, pred_conf = filter_boxes(pred[0], pred[1], score_threshold=0.25, input_shape=tf.constant([input_size, input_size]))
-       
+        infer = saved_model_loaded.signatures['serving_default']
+        batch_data = tf.constant(images_data)
+        pred_bbox = infer(batch_data)
+        for key, value in pred_bbox.items():
+            boxes = value[:, :, 0:4]
+            pred_conf = value[:, :, 4:]
+    
         # run non max suppression on detections
         boxes, scores, classes, valid_detections = tf.image.combined_non_max_suppression(
             boxes=tf.reshape(boxes, (tf.shape(boxes)[0], -1, 1, 4)),
@@ -62,8 +63,8 @@ def main(_argv):
                 pred_conf, (tf.shape(pred_conf)[0], -1, tf.shape(pred_conf)[-1])),
             max_output_size_per_class=50,
             max_total_size=50,
-            iou_threshold=0.45,
-            score_threshold=0.50
+            iou_threshold=0.20,
+            score_threshold=0.20
         )
 
         # format bounding boxes from normalized ymin, xmin, ymax, xmax ---> xmin, ymin, xmax, ymax
@@ -76,7 +77,9 @@ def main(_argv):
         # read in all class names from config
         class_names = utils.read_class_names(cfg.YOLO.CLASSES)
 
-         # count objects found
+        ocr(cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB), pred_bbox)
+
+        # count objects found
         counted_classes = count_objects(pred_bbox, by_class = True, allowed_classes=['person'])
         
         for key, value in counted_classes.items():
