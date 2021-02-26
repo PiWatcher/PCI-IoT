@@ -7,6 +7,7 @@ from absl.flags import FLAGS
 import core.utils as utils
 from core.yolov4 import filter_boxes
 from core.functions import *
+from core.pi_connection import *
 from tensorflow.python.saved_model import tag_constants
 from PIL import Image
 import cv2
@@ -23,6 +24,9 @@ flags.DEFINE_string('output', './detections/', 'path to output folder')
 flags.DEFINE_boolean('info', False, 'print info on detections')
 flags.DEFINE_string('weights', './checkpoints/yolov4-416',
                     'path to weights file')
+flags.DEFINE_string('ip_addr', '127.0.0.1:5000', 'IP address of the flask backend')
+flags.DEFINE_list('endpoint_info', ['90','SICCS','100','Main Lobby', '0'], 
+                  'bldg id, bldg name, endpoint id, endpoint name, count')
 
 def main(_argv):
     start_before = time.perf_counter()
@@ -90,6 +94,7 @@ def main(_argv):
         image.show()
         image = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
         cv2.imwrite(FLAGS.output + 'detection' + str(count) + '.png', image)
+        update_db(FLAGS.ip_addr, FLAGS.endpoint_info)
 
 if __name__ == '__main__':
     try:
