@@ -1,3 +1,6 @@
+sudo apt-get update
+sudo apt-get upgrade
+
 sudo apt-get install libatlas-base-dev -y
 sudo apt-get install libjasper-dev -y
 sudo apt-get install libqtgui4 -y
