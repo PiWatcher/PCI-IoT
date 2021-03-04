@@ -1,31 +1,55 @@
-sudo apt-get update
-sudo apt-get upgrade
+#!/bin/bash
+
+sudo apt-get update -y
+sudo apt-get upgrade -y
 
 sudo apt-get install libatlas-base-dev -y
 sudo apt-get install libjasper-dev -y
 sudo apt-get install libqtgui4 -y
 sudo apt-get install libqt4-test -y
 sudo apt-get install python3-pyqt5 -y
-sudo apt-get install python3-h5py
+sudo apt-get install python3-h5py -y
 
-cd ~/
+#sudo apt-get install wget build-essential checkinstall -y && \
+#sudo apt-get install libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev -y && \
+#wget https://www.python.org/ftp/python/3.7.9/Python-3.7.9.tgz && \
+#tar xzf Python-3.7.9.tgz && \
+#cd Python-3.7.9 && \
+#./configure --enable-optimizations && \
+#sudo make install
 
-sudo apt-get install wget build-essential checkinstall -y&& \
-sudo apt-get install libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev -y && \
-wget https://www.python.org/ftp/python/3.7.9/Python-3.7.9.tgz && \
-tar xzf Python-3.7.9.tgz && \
-cd Python-3.7.9 && \
-./configure --enable-optimizations && \
-sudo make altinstall
+#cd ..
 
-sudo rm -rf Python-3.7.9
-sudo rm -rf Python-3.7.9.tgz
+#sudo rm -rf Python-3.7.9
+#sudo rm -rf Python-3.7.9.tgz
 
-sudo apt-get install python3-venv -y
+python3.7 -m pip install --upgrade pip
 
-cd ~/
-mkdir env
-python3.7 -m venv ~/env/PiEnv
-source ~/env/PiEnv/bin/activate
+python3.7 -m pip install virtualenv
 
-python -m pip install --upgrade pip
+mkdir ~/env
+
+python3.7 -m virtualenv --python=3.7.9 ~/env/PiEnv
+
+~/env/PiEnv/bin/python -m pip install --upgrade pip
+
+~/env/PiEnv/bin/python -m pip install -r requirements.txt --no-cache-dir
+
+echo "Enter Room: " 
+
+read ROOM
+
+echo "Enter Room Number: " 
+
+read ROOMNUM
+
+echo "Enter EndpointID: " 
+
+read ENDPOINT
+
+echo "export ROOM=$ROOM" >> ~/.bashrc
+echo "export ROOMNUM=$ROOMNUM" >> ~/.bashrc
+echo "export ENDPOINTID=$ENDPOINT" >> ~/.bashrc
+
+. ~/.bashrc
+cat ~/.bashrc
