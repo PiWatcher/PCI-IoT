@@ -35,7 +35,7 @@ python3.7 -m virtualenv --python=3.7.9 ~/env/PiEnv
 
 ~/env/PiEnv/bin/python -m pip install -r requirements.txt --no-cache-dir
 
-echo "Enter Room: " 
+echo "Enter Room Name: " 
 
 read ROOM
 
