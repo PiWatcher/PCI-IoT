@@ -52,4 +52,3 @@ echo "export ROOMNUM=$ROOMNUM" >> ~/.bashrc
 echo "export ENDPOINTID=$ENDPOINT" >> ~/.bashrc
 
 . ~/.bashrc
-cat ~/.bashrc
