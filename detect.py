@@ -31,12 +31,12 @@ def detect(saved_model_loaded, infer, input_size, image_path, endpoint_info, ip_
     # session = InteractiveSession(config=config)
     # STRIDES, ANCHORS, NUM_CLASS, XYSCALE = utils.load_config(FLAGS)
     start = time.perf_counter()
-    count = 0
+
     original_image = cv2.imread(image_path)
     original_image = cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB)
     image_data = cv2.resize(original_image, (input_size, input_size))
     image_data = image_data / 255.
-    
+    count = 0
     # get image name by using split method
     image_name = image_path.split('/')[-1]
     image_name = image_name.split('.')[0]
@@ -78,13 +78,16 @@ def detect(saved_model_loaded, infer, input_size, image_path, endpoint_info, ip_
 
     # count objects found
     counted_classes = count_objects(pred_bbox, by_class = True, allowed_classes=['person'])
-    
-    for key, value in counted_classes.items():
-        print("Number of people {}".format(value))
-        count = value
-    print(count)
-    # Append value of people counted to endpoint info
-    endpoint_info.append(str(count))
+    print(counted_classes.items())
+
+    if len(counted_classes.items()) != 0:
+        count += counted_classes['person']
+    else:
+        count += 0
+        
+
+    endpoint_info[4] = count
+
 
     # image = utils.draw_bbox(original_image, pred_bbox, False, counted_classes, allowed_classes=['person'])
     # image = Image.fromarray(image.astype(np.uint8))

@@ -15,7 +15,7 @@ EndPtName = os.getenv("ENDPTNAME")
 EndPtId = os.getenv("ENDPTID")
 ip_addr = os.getenv("IPADDRESS")
 
-endpoint_info = [BldgNum, BldgName, EndPtId, EndPtName]
+endpoint_info = [BldgNum, BldgName, EndPtId, EndPtName, 0]
 
 scheduler = BlockingScheduler()
 print("Loading Model")
