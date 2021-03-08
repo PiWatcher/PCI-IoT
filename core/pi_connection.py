@@ -16,15 +16,15 @@ def update_db(ip_addr, endpoint_info):
     json_str = {
         "timestamp": date_time,
         "building_id": endpoint_info[0],
-        "building": endpoint_info[1],
+        "building_name": endpoint_info[1],
         "endpoint_id": endpoint_info[2],
-        "endpoint": endpoint_info[3],
+        "endpoint_name": endpoint_info[3],
         "count": endpoint_info[4]
     }
 
     json_obj = json.dumps(json_str)
-    url = 'http://' + str(ip_addr) + '/api/update'
-    print(url);
-    x = requests.post(url, json = json_str)
-    print(json_obj);
-    print(x.text)
+    print("Sending Data")
+    url = f'http://{str(ip_addr)}:5000/api/data/update'
+    print(json_obj)
+    x = requests.post(url, json = json_obj)
+    print("Data successfully sent")

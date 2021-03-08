@@ -26,12 +26,12 @@ flags.DEFINE_string('ip_addr', '127.0.0.1:5000', 'IP address of the flask backen
 flags.DEFINE_list('endpoint_info', ['90','SICCS','100','Main Lobby', '0'], 
                   'bldg id, bldg name, endpoint id, endpoint name, count')
 
-def detect(saved_model_loaded, infer, input_size, image_path):
+def detect(saved_model_loaded, infer, input_size, image_path, endpoint_info, ip_addr):
     # config = ConfigProto()
     # session = InteractiveSession(config=config)
     # STRIDES, ANCHORS, NUM_CLASS, XYSCALE = utils.load_config(FLAGS)
     start = time.perf_counter()
-
+    count = 0
     original_image = cv2.imread(image_path)
     original_image = cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB)
     image_data = cv2.resize(original_image, (input_size, input_size))
@@ -81,13 +81,17 @@ def detect(saved_model_loaded, infer, input_size, image_path):
     
     for key, value in counted_classes.items():
         print("Number of people {}".format(value))
+        count = value
+    print(count)
+    # Append value of people counted to endpoint info
+    endpoint_info.append(str(count))
 
     # image = utils.draw_bbox(original_image, pred_bbox, False, counted_classes, allowed_classes=['person'])
     # image = Image.fromarray(image.astype(np.uint8))
     # image.show()
     # image = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
     # cv2.imwrite(FLAGS.output + 'detection' + str(count) + '.png', image)
-    
-    #update_db(FLAGS.ip_addr, FLAGS.endpoint_info)
+
+    update_db(ip_addr, endpoint_info)
     end = time.perf_counter()
     print(end - start)
