@@ -1,12 +1,21 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 import os
 import time
+from detect import *
+from load_model import *
+from picamera import PiCamera
+
+TIME_FRAME = 5
+IMG_PATH = "./data/images/protoTest.jpg"
+camera = PiCamera()
 
 scheduler = BlockingScheduler()
 
+loaded_model,infer = load_model()
+
 def job():
-    cmd = "cd .. && cd yolov4-custom-functions && python detect.py"
-    os.system(cmd)
+    camera.capture(IMG_PATH)
+    detect(load_model, infer, 416, IMG_PATH)
 
 
 def startScheduler(time_frame):
@@ -19,6 +28,6 @@ def stopScheduler():
     scheduler.stop()
 
 def main():
-    startScheduler(10)
+    startScheduler(TIME_FRAME)
 
 main()
