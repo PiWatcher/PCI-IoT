@@ -11,8 +11,8 @@ camera = PiCamera()
 
 BldgName = os.getenv("BLDGNAME")
 BldgNum = os.getenv("BLDGNUM")
-EndPtName = os.getenv("ENDPTNAME")
-EndPtId = os.getenv("ENDPTID")
+EndPtName = os.getenv("ENDPOINTNAME")
+EndPtId = os.getenv("ENDPOINTID")
 ip_addr = os.getenv("IPADDRESS")
 
 endpoint_info = [BldgNum, BldgName, EndPtId, EndPtName, 0]

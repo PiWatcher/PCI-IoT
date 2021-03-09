@@ -60,7 +60,7 @@ echo "export BLDGNUM=$BLDGNUM" >> ~/.bashrc
 echo "export ENDPOINTNAME=$ENDPOINTNAME" >> ~/.bashrc
 echo "export ENDPOINTID=$ENDPOINTID" >> ~/.bashrc
 echo "export ROOMCAP=$ROOMCAP" >> ~/.bashrc
-echo "export IPADDRESS=cscap1.iot.nau.edu"
+echo "export IPADDRESS=cscap1.iot.nau.edu" >> ~/.bashrc
 
 
 . ~/.bashrc
