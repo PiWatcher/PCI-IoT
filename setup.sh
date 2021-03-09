@@ -45,16 +45,21 @@ read BLDGNUM
 
 echo "Enter Room Number: " 
 
-read ENDPOINT
-
-echo "Enter Name: " 
-
 read ENDPOINTNAME
+
+echo "Enter EndpointID: " 
+
+read ENDPOINTID
+
+echo "Enter Maximum Capacity: " 
+
+read ROOMCAP
 
 echo "export BLDGNAME=$BLDGNAME" >> ~/.bashrc
 echo "export BLDGNUM=$BLDGNUM" >> ~/.bashrc
 echo "export ENDPOINTNAME=$ENDPOINTNAME" >> ~/.bashrc
 echo "export ENDPOINTID=$ENDPOINTID" >> ~/.bashrc
+echo "export ROOMCAP=$ROOMCAP" >> ~/.bashrc
 echo "export IPADDRESS=cscap1.iot.nau.edu"
 
 
