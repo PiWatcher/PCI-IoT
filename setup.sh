@@ -35,20 +35,32 @@ python3.7 -m virtualenv --python=3.7.9 ~/env/PiEnv
 
 ~/env/PiEnv/bin/python -m pip install -r requirements.txt --no-cache-dir
 
-echo "Enter Room Name: " 
+echo "Enter Building Name: " 
 
-read ROOM
+read BLDGNAME
+
+echo "Enter Building Number: " 
+
+read BLDGNUM
 
 echo "Enter Room Number: " 
 
-read ROOMNUM
+read ENDPOINTNAME
 
 echo "Enter EndpointID: " 
 
-read ENDPOINT
+read ENDPOINTID
 
-echo "export ROOM=$ROOM" >> ~/.bashrc
-echo "export ROOMNUM=$ROOMNUM" >> ~/.bashrc
-echo "export ENDPOINTID=$ENDPOINT" >> ~/.bashrc
+echo "Enter Maximum Capacity: " 
+
+read ROOMCAP
+
+echo "export BLDGNAME=$BLDGNAME" >> ~/.bashrc
+echo "export BLDGNUM=$BLDGNUM" >> ~/.bashrc
+echo "export ENDPOINTNAME=$ENDPOINTNAME" >> ~/.bashrc
+echo "export ENDPOINTID=$ENDPOINTID" >> ~/.bashrc
+echo "export ROOMCAP=$ROOMCAP" >> ~/.bashrc
+echo "export IPADDRESS=cscap1.iot.nau.edu"
+
 
 . ~/.bashrc
