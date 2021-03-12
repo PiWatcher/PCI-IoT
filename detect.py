@@ -16,17 +16,8 @@ from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
 import time
 
-flags.DEFINE_integer('size', 416, 'resize images to')
-flags.DEFINE_boolean('tiny', False, 'yolo or yolo-tiny')
-flags.DEFINE_string('model', 'yolov4', 'yolov3 or yolov4')
-flags.DEFINE_list('image_path', './data/images/kite.jpg', 'path to input image')
-flags.DEFINE_string('output', './detections/', 'path to output folder')
-flags.DEFINE_boolean('info', False, 'print info on detections')
-flags.DEFINE_string('ip_addr', '127.0.0.1:5000', 'IP address of the flask backend')
-flags.DEFINE_list('endpoint_info', ['90','SICCS','100','Main Lobby', '0'], 
-                  'bldg id, bldg name, endpoint id, endpoint name, count')
 
-def detect(saved_model_loaded, infer, input_size, image_path, endpoint_info, ip_addr):
+def detect(saved_model_loaded, infer, input_size, image_path):
     # config = ConfigProto()
     # session = InteractiveSession(config=config)
     # STRIDES, ANCHORS, NUM_CLASS, XYSCALE = utils.load_config(FLAGS)
@@ -84,9 +75,6 @@ def detect(saved_model_loaded, infer, input_size, image_path, endpoint_info, ip_
         count += counted_classes['person']
     else:
         count += 0
-        
-
-    endpoint_info[4] = count
 
 
     # image = utils.draw_bbox(original_image, pred_bbox, False, counted_classes, allowed_classes=['person'])
@@ -95,6 +83,6 @@ def detect(saved_model_loaded, infer, input_size, image_path, endpoint_info, ip_
     # image = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
     # cv2.imwrite(FLAGS.output + 'detection' + str(count) + '.png', image)
 
-    update_db(ip_addr, endpoint_info)
+    update_db(count)
     end = time.perf_counter()
     print(end - start)
