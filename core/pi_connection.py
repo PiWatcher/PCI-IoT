@@ -2,6 +2,7 @@ import sys
 import datetime
 import json
 import requests
+from bson import json_util
 
 '''
 "timestamp": "2020-11-18 13:47:39.716041",
@@ -12,7 +13,7 @@ import requests
     "count": 9
 '''
 def update_db(ip_addr, endpoint_info):
-    date_time = str(datetime.datetime.now())
+    date_time = datetime.datetime.now()
     
     json_str = {
         "timestamp": date_time,
@@ -26,7 +27,7 @@ def update_db(ip_addr, endpoint_info):
 
     #json_obj = json.dumps(json_str)
 
-    # json_obj = json.dumps(json_str, default=json_util.default)
+    json_obj = json.dumps(json_str, default=json_util.default)
     url = f'http://{str(ip_addr)}:5000/api/data/update'
-    #print(json_obj)
-    x = requests.post(url, json = json_str)
+    print(json_obj)
+    x = requests.post(url, json = json_obj)
