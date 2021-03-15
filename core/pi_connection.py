@@ -2,6 +2,7 @@ import sys
 import datetime
 import json
 import requests
+import os
 
 '''
 "timestamp": "2020-11-18 13:47:39.716041",
@@ -11,16 +12,22 @@ import requests
     "endpoint_name": "Main Lobby",
     "count": 9
 '''
-def update_db(ip_addr, endpoint_info):
+def update_db(count):
+    BldgName = os.getenv("BLDGNAME")
+    BldgNum = os.getenv("BLDGNUM")
+    RoomNum = os.getenv("ROOMNUM")
+    EndPtId = os.getenv("ENDPTID")
+    ip_addr = os.getenv("IPADDRESS")
+
     date_time = str(datetime.datetime.now())
     
     json_str = {
         "timestamp": date_time,
-        "building_id": endpoint_info[0],
-        "building": endpoint_info[1],
-        "endpoint_id": endpoint_info[2],
-        "endpoint": endpoint_info[3],
-        "count": endpoint_info[4],
+        "building_id": BldgNum,
+        "building": BldgName,
+        "endpoint_id": EndPtId,
+        "endpoint": RoomNum,
+        "count": count,
         "room_capacity": 50
     }
 
