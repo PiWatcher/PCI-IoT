@@ -18,18 +18,19 @@ def update_db(count):
     BldgNum = os.getenv("BLDGNUM")
     RoomNum = os.getenv("ROOMNUM")
     EndPtId = os.getenv("ENDPTID")
+    RoomCap = os.getenv("ROOMCAP")
     ip_addr = os.getenv("IPADDRESS")
 
-    date_time = datetime.datetime.now()
+    date_time = str(datetime.datetime.now())
     
     json_str = {
         "timestamp": date_time,
         "building_id": BldgNum,
-        "building": BldgName,
+        "building_name": BldgName,
         "endpoint_id": EndPtId,
-        "endpoint": RoomNum,
+        "room_name": RoomNum,
         "count": count,
-        "room_capacity": 50
+        "room_capacity": RoomCap
     }
 
     #json_obj = json.dumps(json_str)
@@ -37,4 +38,4 @@ def update_db(count):
     json_obj = json.dumps(json_str, default=json_util.default)
     url = f'http://{str(ip_addr)}:5000/api/data/update'
     print(json_obj)
-    x = requests.post(url, json = json_obj)
+    x = requests.post(url, json = json_str)

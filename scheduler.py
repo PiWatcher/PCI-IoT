@@ -16,6 +16,7 @@ loaded_model,infer = load_model()
 def job():
     camera.capture(IMG_PATH)
     detect(load_model, infer, 416, IMG_PATH)
+    os.remove(IMG_PATH)
 
 
 def startScheduler(time_frame):
