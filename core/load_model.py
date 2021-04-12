@@ -15,4 +15,5 @@ def load_model():
     
     except:
         raise Exception("Model Incorrectly loaded")
+        return - 9999
 

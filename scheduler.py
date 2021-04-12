@@ -2,7 +2,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 import os
 import time
 from detect import *
-from load_model import *
+from core.load_model import *
 from picamera import PiCamera
 
 TIME_FRAME = 5

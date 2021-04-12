@@ -36,6 +36,6 @@ def update_db(count):
     #json_obj = json.dumps(json_str)
 
     json_obj = json.dumps(json_str, default=json_util.default)
-    url = f'http://{str(ip_addr)}:5000/api/data/update'
+    url = f'http://{str(ip_addr)}:5000/api/data/iot/update'
     print(json_obj)
     x = requests.post(url, json = json_str)
