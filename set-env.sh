@@ -30,7 +30,7 @@ echo "export BLDGNUM=$BLDGNUM" >> ~/.bashrc
 echo "export ROOMNUM=$ROOMNUM" >> ~/.bashrc
 echo "export ENDPOINTID=$ENDPOINTID" >> ~/.bashrc
 echo "export ROOMCAP=$ROOMCAP" >> ~/.bashrc
-echo "export IPADDRESS=cscap1.iot.nau.edu" >> ~/.bashrc
+echo "export IPADDRESS=172.20.64.38:5000" >> ~/.bashrc
 
 
 . ~/.bashrc
