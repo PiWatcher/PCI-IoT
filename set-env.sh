@@ -19,7 +19,7 @@ read ROOMNUM
 
 echo "Enter EndpointID: " 
 
-read ENDPOINTID
+read ENDPTID
 
 echo "Enter Maximum Capacity: " 
 
@@ -28,7 +28,7 @@ read ROOMCAP
 echo "export BLDGNAME=$BLDGNAME" >> ~/.bashrc
 echo "export BLDGNUM=$BLDGNUM" >> ~/.bashrc
 echo "export ROOMNUM=$ROOMNUM" >> ~/.bashrc
-echo "export ENDPOINTID=$ENDPOINTID" >> ~/.bashrc
+echo "export ENDPTID=$ENDPTID" >> ~/.bashrc
 echo "export ROOMCAP=$ROOMCAP" >> ~/.bashrc
 echo "export IPADDRESS=172.20.64.38:5000" >> ~/.bashrc
 
