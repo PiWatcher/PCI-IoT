@@ -26,19 +26,43 @@
 ## Cloning The Repo Onto The Pi
 - Open up a terminal window on the Raspoberry Pi
 - Run the following command <br>
-HTTPS: ```git clone https://github.com/PiWatcher/PCI-Prototype-IoT.git``` <br>
-SSH: ```git@github.com:PiWatcher/PCI-Prototype-IoT.git```
+HTTPS: 
+```console
+git clone https://github.com/PiWatcher/PCI-Prototype-IoT.git
+``` 
+<br>
+SSH: 
+```console
+git@github.com:PiWatcher/PCI-Prototype-IoT.git
+```
 
 ## Installing dependancies
 - After repo has been cloned cd into it
 - Run the following command <br>
-```. setup.sh``` <br>
+```console
+. setup.sh
+``` 
+<br>
 Now follow any prompts on the shell
 - This will install the correct version of Python along with any dependancies needed into a virtual enviornment that will be placed into the Pi's Home Directory
 
+## Starting/Deactivating the Virtual Enviornment
+- To start the virtual enviornment:<br>
+```console
+source ~/env/PiEnv/bin/activate
+```
+- To deactivate the virtual enviornment:<br>
+```console
+deactivate
+```
+
+## Running the Application
+- To run the application ensure you are in the cloned folder and the virtual enviornment is running then execute the command below <br>
+```console
+python scheduler.py
+```
 
 Make sure to manually add the checkpoints folder to the root directory of this repo from the capstone drive
 
 https://drive.google.com/file/d/123C8nYOtgUemRZKsUipiOc0CxIWqyk5V/view?usp=sharing
 
-python detect.py --size 416 --model yolov4 --images ./data/images/kite.jpg --ip_addr 127.0.0.1:5000 --endpoint_info '90', 'SICCS', '100', 'Main Lobby', '0'
