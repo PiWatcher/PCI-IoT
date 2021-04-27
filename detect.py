@@ -1,3 +1,11 @@
+###############################################################################
+#
+# AUTHOR(S): Joshua Holguin
+# DESCRIPTION: Program will analyze an image and send appropriate data to a 
+# specified endpoint
+# VERSION: 1.0.0v
+#
+###############################################################################
 import os
 # comment out below line to enable tensorflow outputs
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -16,12 +24,18 @@ from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
 import time
 
-
+# Function: detect
+# INPUT ARGS:
+# saved_model_loaded - Saved Yolo4 model
+# infer - Signitures of the model
+# input_size - Size of photo (pixles)
+# image_path - File path to image
+# Return: None
 def detect(saved_model_loaded, infer, input_size, image_path):
     # config = ConfigProto()
     # session = InteractiveSession(config=config)
     # STRIDES, ANCHORS, NUM_CLASS, XYSCALE = utils.load_config(FLAGS)
-    start = time.perf_counter()
+    # start = time.perf_counter()
 
     original_image = cv2.imread(image_path)
     original_image = cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB)
@@ -84,5 +98,5 @@ def detect(saved_model_loaded, infer, input_size, image_path):
     # cv2.imwrite(FLAGS.output + 'detection' + str(count) + '.png', image)
 
     update_db(count)
-    end = time.perf_counter()
-    print(end - start)
+    # end = time.perf_counter()
+    # print(end - start)

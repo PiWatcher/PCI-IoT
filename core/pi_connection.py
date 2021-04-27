@@ -6,13 +6,20 @@ from bson import json_util
 import os
 
 '''
+EXAMPLE JSON
 "timestamp": "2020-11-18 13:47:39.716041",
     "building_id": "90",
     "building_name": "SICCS",
     "endpoint_id": "100",
-    "endpoint_name": "Main Lobby",
-    "count": 9
+    "room_name": "Main Lobby",
+    "count": 9,
+    "room_capacity": 50
 '''
+
+# Function: update_db
+# INPUT ARGS:
+# count - number of people
+# Return: status code of api that was hit
 def update_db(count):
     ip_addr = os.getenv("IPADDRESS")
 
@@ -28,6 +35,10 @@ def update_db(count):
 
     return x.status_code
 
+# Function: genertate_json
+# INPUT ARGS:
+# count - number of people
+# Return: json string correctly formatted for endpoint 
 def generate_json(count):
     BldgName = os.getenv("BLDGNAME")
     BldgNum = os.getenv("BLDGNUM")
