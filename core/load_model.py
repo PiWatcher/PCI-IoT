@@ -4,6 +4,10 @@ import time
 from tensorflow.python.saved_model import tag_constants
 import tensorflow as tf
 
+# Function: load_model
+# INPUT ARGS:
+# None
+# Return: Loaded_Model, Model signitures (infer)
 def load_model():
     try:
         start_before = time.perf_counter()
