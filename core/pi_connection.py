@@ -33,7 +33,7 @@ def update_db(count):
     except:
         raise "Unable to hit backend API"
 
-    print(x.json())
+    # print(x.json())
     return x.status_code
 
 # Function: genertate_json
@@ -49,13 +49,14 @@ def generate_json(count):
 
     date_time = datetime.datetime.now().isoformat()
     
+    
     json_str = {
         "timestamp": date_time,
         "building_id": BldgNum,
         "building": BldgName,
         "endpoint_id": EndPtId,
         "endpoint": RoomNum,
-        "count": int(count),
+        "count": count,
         "room_capacity": int(RoomCap)
     }
 
