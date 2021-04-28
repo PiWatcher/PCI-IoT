@@ -25,14 +25,15 @@ def update_db(count):
 
     json_str = generate_json(count)
 
-    json_obj = json.dumps(json_str, default=json_util.default)
+    json_obj = json.dumps(json_str, default = json_util.default)
     try:
         url = f'http://{str(ip_addr)}:5000/api/data/iot/update'
-        print(json_obj)
+        print(json_str)
         x = requests.post(url, json = json_str)
     except:
         raise "Unable to hit backend API"
 
+    print(x.json())
     return x.status_code
 
 # Function: genertate_json
@@ -46,16 +47,16 @@ def generate_json(count):
     EndPtId = os.getenv("ENDPTID")
     RoomCap = os.getenv("ROOMCAP")
 
-    date_time = str(datetime.datetime.now())
+    date_time = datetime.datetime.now().isoformat()
     
     json_str = {
         "timestamp": date_time,
         "building_id": BldgNum,
-        "building_name": BldgName,
+        "building": BldgName,
         "endpoint_id": EndPtId,
-        "room_name": RoomNum,
-        "count": count,
-        "room_capacity": RoomCap
+        "endpoint": RoomNum,
+        "count": int(count),
+        "room_capacity": int(RoomCap)
     }
 
     return json_str

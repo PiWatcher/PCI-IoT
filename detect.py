@@ -83,7 +83,7 @@ def detect(saved_model_loaded, infer, input_size, image_path):
 
     # count objects found
     counted_classes = count_objects(pred_bbox, by_class = True, allowed_classes=['person'])
-    print(counted_classes.items())
+    # print(counted_classes.items())
 
     if len(counted_classes.items()) != 0:
         count += counted_classes['person']
